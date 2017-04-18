@@ -12,4 +12,6 @@ Set up;
   
   4. Select Host: localhost and Database: hospital
   
-  5. Fill database by running $ python2.7 init.py
+  5. Fill database by running 
+  
+  5.1 $ python2.7 init.py
