@@ -14,4 +14,4 @@ Set up;
   
   5. Fill database by running 
   
-  5.1 $ python2.7 init.py
+    5.1 $ python2.7 init.py
