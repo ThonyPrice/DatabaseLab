@@ -1,3 +1,4 @@
+import random
 import psycopg2
 # http://initd.org/psycopg/docs/usage.html
 
@@ -14,18 +15,28 @@ def mkPerson(cur):
                                         name varchar,           \
                                         age integer,            \
                                         gender char);")
-    i = 1
-    while i < 11:
+    for i in range(1, 11):
         cur.execute("INSERT INTO person (id, name, age, gender) VALUES (%s, %s, %s, %s)",
         (i, "Person" + str(i), 30+i, gender(i))
         )
-        i += 1
     return
 
 def mkPatient(cur):
     cur.execute("SELECT * FROM person;")
     data = cur.fetchall()
-    print data
+    return
+    
+def mkTeam(cur):
+    cur.execute("CREATE TABLE Team (    teamId serial PRIMARY KEY,  \
+                                        head varchar,               \
+                                        skill1 varchar,             \
+                                        skill2 varchar,             \
+                                        skill3 varchar);")
+
+    for i in range(1, 6):
+        cur.execute("INSERT INTO Team (teamId, head, skill1, skill2, skill3) VALUES (%s, %s, %s, %s, %s)",
+        (i, "Head" + str(i), str(random.randrange(1, 11)), 
+        str(random.randrange(1, 11)), str(random.randrange(1, 11))))
     return
 
 def gender(num):
@@ -41,6 +52,8 @@ def main():
     cur = conn.cursor()
     dropTable('person', cur)
     mkPerson(cur)
+    dropTable('team', cur)
+    mkTeam(cur)
     mkPatient(cur)
     # Make the changes to the database persistent
     conn.commit()
