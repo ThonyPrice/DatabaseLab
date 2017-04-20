@@ -76,6 +76,13 @@ def gtIssues(cur):
         res_list += [row[0]]
     return res_list
 
+def mkQueue(cur):
+    cur.execute("CREATE TABLE Queue(    patientId serial PRIMARY KEY,   \
+                                        teamID serial,                  \
+                                        tstamp int,                     \
+                                        priority int)")
+    return
+
 def main():
     # Connect to an existing database
     conn = psycopg2.connect("dbname=hospital user=postgres")
@@ -87,6 +94,8 @@ def main():
     mkTeam(cur)
     dropTable('treatments', cur)
     mkTreatments(cur)
+    # dropTable('Queue', cur)
+    mkQueue(cur)
     issue_list = gtIssues(cur)
     # Make the changes to the database persistent
     conn.commit()
