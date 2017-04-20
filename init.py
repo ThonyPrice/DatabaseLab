@@ -14,11 +14,15 @@ def mkPerson(cur):
     cur.execute("CREATE TABLE Person (  id serial PRIMARY KEY,  \
                                         name varchar,           \
                                         age integer,            \
-                                        gender char);")
+                                        gender char,            \
+                                        issue varchar,          \
+                                        priority integer);")
     for i in range(1, 11):
-        cur.execute("INSERT INTO person (id, name, age, gender) VALUES (%s, %s, %s, %s)",
-        (i, "Person" + str(i), 30+i, gender(i))
-        )
+        cur.execute("INSERT INTO person (id, name, age, gender, issue, priority) \
+                    VALUES (%s, %s, %s, %s, %s, %s)",
+                    (i, "Person" + str(i), 30+i, gender(i), i, 
+                    random.randrange(1,6))
+                    )
     return
 
 def mkPatient(cur):
@@ -44,6 +48,19 @@ def gender(num):
         return "M"
     return "F" 
 
+def mkTreatments(cur):
+    cur.execute("CREATE TABLE Treatments(   issue varchar PRIMARY KEY,  \
+                                            treatment varchar);")    
+    for i in range(1,11):
+        cur.execute("INSERT INTO Treatments (issue, treatment) VALUES (%s, %s)",
+        (str(i), str(i)))
+    return
+
+def gtIssues(cur):
+    cur.execute("SELECT issue FROM Treatments;")
+    data = cur.fetchall()
+    print data
+    return    
 
 def main():
     # Connect to an existing database
@@ -54,7 +71,10 @@ def main():
     mkPerson(cur)
     dropTable('team', cur)
     mkTeam(cur)
-    mkPatient(cur)
+    dropTable('treatments', cur)
+    mkTreatments(cur)
+    gtIssues(cur)
+    # mkPatient(cur)
     # Make the changes to the database persistent
     conn.commit()
     # Close communication with the database
