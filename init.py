@@ -1,6 +1,7 @@
 import random
 import psycopg2
 # http://initd.org/psycopg/docs/usage.html
+import tkinter_test as app
 
 
 # Drop table person
@@ -58,9 +59,10 @@ def mkTreatments(cur):
 
 def gtIssues(cur):
     cur.execute("SELECT issue FROM Treatments;")
-    data = cur.fetchall()
-    print data
-    return    
+    res_list = []
+    for row in cur.fetchall():
+        res_list += [row[0]]
+    return res_list
 
 def main():
     # Connect to an existing database
@@ -73,8 +75,11 @@ def main():
     mkTeam(cur)
     dropTable('treatments', cur)
     mkTreatments(cur)
-    gtIssues(cur)
-    # mkPatient(cur)
+    issue_list = gtIssues(cur)
+    # mkPatient(cur) This might not be necessary
+    # Create tkinter Nurse's form window
+    app1 = app.Application(issue_list)
+    app1.mainloop()
     # Make the changes to the database persistent
     conn.commit()
     # Close communication with the database
