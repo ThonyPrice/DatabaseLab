@@ -12,6 +12,7 @@ class Application(tk.Frame):
         self.issues = list_of_issues
         self.createWidgets()
         self.timestamp = None
+        self.data = None
 
     def createWidgets(self):
         name    = tk.StringVar()
@@ -39,7 +40,7 @@ class Application(tk.Frame):
         self.quitButton = tk.Button(self, text='Quit',
             command=self.quit)
         self.quitButton.grid(row=20, column=0)
-
+        
     def setPrio(self, value):
         self.prio = value
 
@@ -51,7 +52,7 @@ class Application(tk.Frame):
         name = name.get()
         age = age.get()
         gender = gender.get()
-        print name, age, gender, self.prio, self.issue, self.timestamp
+        self.data = [name, age, gender, self.prio, self.issue, self.timestamp]
 
 
 # app = Application()
