@@ -1,16 +1,18 @@
-#!/usr/bin/env python   
-import Tkinter as tk    
+#!/usr/bin/env python
+import Tkinter as tk
+import datetime
 
 list_of_issues = [1,2,3,4,5,6,7,8,9,10]
 
-class Application(tk.Frame):           
+class Application(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
         self.grid()
         self.prio = None
         self.issue = None
         self.createWidgets()
-    
+        self.timestamp = None
+
     def createWidgets(self):
         name    = tk.StringVar()
         age     = tk.StringVar()
@@ -28,29 +30,30 @@ class Application(tk.Frame):
                 command= lambda val = str(i+1): self.setPrio(str(val))).grid(row=3+i, column=1)
         i = 0
         for issue in list_of_issues:
-            tk.Button(self, text=str(issue), 
+            tk.Button(self, text=str(issue),
                 command= lambda val = str(issue): self.setIssue(val)).grid(row=8+i, column=1)
             i += 1
-            
+
         self.insertButton = tk.Button(self, text='Insert',
             command=lambda: self.getData(name, age, gender)).grid(row=19, column=0)
         self.quitButton = tk.Button(self, text='Quit',
             command=self.quit)
         self.quitButton.grid(row=20, column=0)
-    
+
     def setPrio(self, value):
         self.prio = value
-    
+
     def setIssue(self, value):
         self.issue = value
-    
+
     def getData(self, name, age, gender):
+        self.timestamp = datetime.datetime.now().time()
         name = name.get()
         age = age.get()
         gender = gender.get()
-        print name, age, gender, self.prio, self.issue
-        
+        print name, age, gender, self.prio, self.issue, self.timestamp
+
 
 app = Application()
-app.master.title('Nurse\'s form') 
+app.master.title('Nurse\'s form')
 app.mainloop()
