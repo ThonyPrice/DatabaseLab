@@ -2,14 +2,14 @@
 import Tkinter as tk
 import datetime
 
-list_of_issues = [1,2,3,4,5,6,7,8,9,10]
 
 class Application(tk.Frame):
-    def __init__(self, master=None):
+    def __init__(self, list_of_issues, master=None):
         tk.Frame.__init__(self, master)
         self.grid()
         self.prio = None
         self.issue = None
+        self.issues = list_of_issues
         self.createWidgets()
         self.timestamp = None
 
@@ -29,7 +29,7 @@ class Application(tk.Frame):
             tk.Button(self, text=str(i+1),
                 command= lambda val = str(i+1): self.setPrio(str(val))).grid(row=3+i, column=1)
         i = 0
-        for issue in list_of_issues:
+        for issue in self.issues:
             tk.Button(self, text=str(issue),
                 command= lambda val = str(issue): self.setIssue(val)).grid(row=8+i, column=1)
             i += 1
@@ -54,6 +54,6 @@ class Application(tk.Frame):
         print name, age, gender, self.prio, self.issue, self.timestamp
 
 
-app = Application()
-app.master.title('Nurse\'s form')
-app.mainloop()
+# app = Application()
+# app.master.title('Nurse\'s form')
+# app.mainloop()
