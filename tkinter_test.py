@@ -24,16 +24,16 @@ class Application(tk.Frame):
         self.age_entry      = tk.Entry(self, textvariable=age).grid(row=1, column=1)
         self.gender_entry   = tk.Entry(self, textvariable=gender).grid(row=2, column=1)
         for i in range(5):
-            tk.Button(self, text=str(i+1), 
-                command=lambda: self.setPrio(self.text)).grid(row=3+i, column=1)
+            tk.Button(self, text=str(i+1),
+                command= lambda val = str(i+1): self.setPrio(str(val))).grid(row=3+i, column=1)
         i = 0
         for issue in list_of_issues:
-            self.insertButton = tk.Button(self, text=str(issue), 
-                command=lambda: self.setIssue(str(issue))).grid(row=8+i, column=1)
+            tk.Button(self, text=str(issue), 
+                command= lambda val = str(issue): self.setIssue(val)).grid(row=8+i, column=1)
             i += 1
+            
         self.insertButton = tk.Button(self, text='Insert',
             command=lambda: self.getData(name, age, gender)).grid(row=19, column=0)
-        
         self.quitButton = tk.Button(self, text='Quit',
             command=self.quit)
         self.quitButton.grid(row=20, column=0)
