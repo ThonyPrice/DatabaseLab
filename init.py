@@ -94,7 +94,7 @@ def main():
     mkTeam(cur)
     dropTable('treatments', cur)
     mkTreatments(cur)
-    # dropTable('Queue', cur)
+    dropTable('Queue', cur)
     mkQueue(cur)
     issue_list = gtIssues(cur)
     # Make the changes to the database persistent
@@ -102,8 +102,8 @@ def main():
     # mkPatient(cur) This might not be necessary
     # Create tkinter Nurse's form window
     app1 = app.Application(issue_list)
-    data = app1.mainloop()
-    print data
+    app1.mainloop()
+    print app1.data
     # Close communication with the database
     cur.close()
     conn.close()
