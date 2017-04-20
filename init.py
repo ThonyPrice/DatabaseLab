@@ -102,8 +102,8 @@ def main():
     # mkPatient(cur) This might not be necessary
     # Create tkinter Nurse's form window
     app1 = app.Application(issue_list)
-    app1.mainloop()
-
+    data = app1.mainloop()
+    print data
     # Close communication with the database
     cur.close()
     conn.close()
