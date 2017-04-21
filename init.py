@@ -81,6 +81,12 @@ def mkQueue(cur):
                                         teamID serial,                  \
                                         tstamp int,                     \
                                         priority int)")
+    for i in range(1, 7):
+        cur.execute("INSERT INTO Queue (patientId, teamID, tstamp, priority) VALUES (%s, %s, %s, %s)",
+        (str(i), random.randrange(1,6), 0, random.randrange(1, 6)))
+    return
+
+def findTeamQueue(data):
     return
 
 def main():
