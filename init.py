@@ -2,6 +2,7 @@ import random
 import psycopg2
 # http://initd.org/psycopg/docs/usage.html
 import tkinter_test as app
+import doctor_form as doctor
 
 
 # Return list of existing issues from db
