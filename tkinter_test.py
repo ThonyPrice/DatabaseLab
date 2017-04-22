@@ -59,7 +59,7 @@ class Application(tk.Frame):
         q_prios = []
         for i in range(len(queues)):
             prio_data = []
-            t = tk.Text(self, width=45, height=10)
+            t = tk.Text(self, width=60, height=10)
             for tupl in queues[i]:
                 prio_data.append((tupl[0], tupl[5]))
                 t.insert('end', str(tupl) + '\n')
