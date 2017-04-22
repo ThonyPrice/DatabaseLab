@@ -41,7 +41,6 @@ def getPatient(cur, teamid):
     AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s) \
     AND Timestmp = (SELECT MIN(timestmp) FROM Queue WHERE teamID = %(teamid)s\
     AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s))", {'teamid': teamid})
-    print "hej"
     return [x for x in cur.fetchall()]
 
 
@@ -68,15 +67,21 @@ def main():
     app1.showTimeBtns(q_data, pdata[3]) # pdata[3] is priority of a patient
     app1.mainloop()
     teamq = app1.to_team
+    app1.destroy()
     # Insert patient into queue
     time = '15:30' # This is the time our patients is logged in the system
     insertPatient(cur, teamq, pdata, time)
-    #app2 = app2.Application()
-    teamid = 4  #senare app2.team
-
-
-    patient = getPatient(cur, teamid)
-    print patient
+    # Open doctors form
+    app2 = doctor.Application()
+    app2.mainloop()
+    teamid = app2.team # Get choosen teamId
+    # Collect patient first in given teamId's queue
+    patient = getPatient(cur, teamid)  
+    patient_tup = patient[0]
+    # Show patient info in doc_form
+    app2.showPatientInfo(patient_tup)
+    #TODO: app2.showTreatments()
+    app2.mainloop()
 
 
     #app2.showpatient.(teamid)
