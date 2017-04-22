@@ -13,12 +13,12 @@ def gtIssues(cur):
 # Find teamID's that can treat given issue
 def getTeam(cur, issue):
     teamId = cur.execute( "SELECT teamid FROM Team WHERE issue1 = %(issue)s \
-                        OR issue2 = %(issue)s OR issue3 = %(issue)s", 
+                        OR issue2 = %(issue)s OR issue3 = %(issue)s",
         {'issue': issue})
     return [x[0] for x in cur.fetchall()]
 
 
-# Return a list of all queues with given id's    
+# Return a list of all queues with given id's
 def getQueues(cur, ids):
     q = []
     for i in ids:
@@ -30,10 +30,21 @@ def getQueues(cur, ids):
 def insertPatient(cur, teamId, pdata, time):
     cur.execute("INSERT INTO Queue \
         (teamID, name, age, gender, issue, priority, timestmp) \
-        VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+        VALUES (%s, %s, %s, %s, %s, %s, %s)",
         (teamId, pdata[0], int(pdata[1]), pdata[2], pdata[4], int(pdata[3]), time)
     )
     return
+
+def getPatient(cur, teamid):
+    cur.execute("SELECT * FROM Queue WHERE teamID = %(teamid)s \
+    AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s) \
+    AND Timestmp = (SELECT MIN(timestmp) FROM Queue WHERE teamID = %(teamid)s\
+    AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s))", {'teamid': teamid})
+    print "hej"
+    return [x for x in cur.fetchall()]
+
+
+
 
 def main():
     # Connect to an existing database
@@ -59,6 +70,15 @@ def main():
     # Insert patient into queue
     time = '15:30' # This is the time our patients is logged in the system
     insertPatient(cur, teamq, pdata, time)
+    #app2 = app2.Application()
+    teamid = 4  #senare app2.team
+
+
+    patient = getPatient(cur, teamid)
+    print patient
+
+
+    #app2.showpatient.(teamid)
     print '--- EOF ---'
     # Make the changes to the database persistent
     conn.commit()
