@@ -20,13 +20,14 @@ def mkQueue(cur):
         age integer,                    \
         gender char,                    \
         issue varchar,                  \
-        priority integer);"
+        priority integer,               \
+        timestmp varchar);"
     )
     for pdata in queue_data:
         cur.execute("INSERT INTO Queue \
-            (teamID, name, age, gender, issue, priority) \
-            VALUES (%s, %s, %s, %s, %s, %s)", 
-            (pdata[0], pdata[1], pdata[2], pdata[3], pdata[4], pdata[5])
+            (teamID, name, age, gender, issue, priority, timestmp) \
+            VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+            (pdata[0], pdata[1], pdata[2], pdata[3], pdata[4], pdata[5], pdata[6])
         )
     return
 
