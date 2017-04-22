@@ -54,14 +54,11 @@ class Application(tk.Frame):
         gender = gender.get()
         self.data = [name, age, gender, self.prio, self.issue] # Removed timestamp for now
     
-    def showQueues(self, pdata):
-        t = tk.Text(self)
-        for data in pdata:
-            t.insert('end', data + '\n')
-        t.grid(row=22)
-        # listbox.insert(END, "a list entry")
-        
+    def showQueues(self, queues):
+        for i in range(len(queues)):
+            t = tk.Text(self)
+            for tupl in queues[i]:
+                t.insert('end', str(tupl) + '\n')
+            t.grid(row=22, column=1+i)
 
-# app = Application()
-# app.master.title('Nurse\'s form')
-# app.mainloop()
+
