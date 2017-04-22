@@ -27,11 +27,11 @@ def getQueues(cur, ids):
         q.append(cur.fetchall())
     return q
 
-def insertPatient(cur, teamId, pdata):
+def insertPatient(cur, teamId, pdata, time):
     cur.execute("INSERT INTO Queue \
-        (teamID, name, age, gender, issue, priority) \
-        VALUES (%s, %s, %s, %s, %s, %s)", 
-        (teamId, pdata[0], int(pdata[1]), pdata[2], pdata[4], int(pdata[3]))
+        (teamID, name, age, gender, issue, priority, timestmp) \
+        VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+        (teamId, pdata[0], int(pdata[1]), pdata[2], pdata[4], int(pdata[3]), time)
     )
     return
 
@@ -57,7 +57,8 @@ def main():
     app1.mainloop()
     teamq = app1.to_team
     # Insert patient into queue
-    insertPatient(cur, teamq, pdata)
+    time = '15:30' # This is the time our patients is logged in the system
+    insertPatient(cur, teamq, pdata, time)
     print '--- EOF ---'
     # Make the changes to the database persistent
     conn.commit()
