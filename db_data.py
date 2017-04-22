@@ -7,7 +7,7 @@ queue_data = [
     ['1', 'Berit',  45, 'F', 'Broken arm',      4,  '14:00'],
     ['1', 'Carl',   54, 'M', 'Broken back',     2,  '13:45'],
     ['1', 'Dan',    4,  'M', 'Broken arm',      1,  '15:00'],
-    ['2', 'Erik',   77, 'M', 'Snake bite',      4   '14:45'],
+    ['2', 'Erik',   77, 'M', 'Snake bite',      4,  '14:45'],
     ['2', 'Fiona',  24, 'F', 'Dog bite',        2,  '15:15'],
     ['2', 'Gaston', 64, 'M', 'Cat bite',        3,  '14:30'],
     ['2', 'Hans',   59, 'M', 'Cat bite',        5,  '13:00'],
