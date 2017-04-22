@@ -71,3 +71,15 @@ issues_and_treatments = [
     ['Serious trauma', 'Surgery3']
 ]
 
+drugs_data = [
+    ['Blue pill',   '45'],
+    ['Red pill',    '20'],
+    ['Cyan pill',   '75'],
+    ['Orange pill', '15'],
+    ['Green pill',  '30'],
+    ['Black pill',  '50'],
+    ['White pill',  '45'],
+    ['Grey pill',   '25'],
+    ['Violet pill', '60'],
+    ['Two pills',   '95'],
+]
