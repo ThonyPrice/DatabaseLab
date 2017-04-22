@@ -27,6 +27,13 @@ def getQueues(cur, ids):
         q.append(cur.fetchall())
     return q
 
+def insertPatient(cur, teamId, pdata):
+    cur.execute("INSERT INTO Queue \
+        (teamID, name, age, gender, issue, priority) \
+        VALUES (%s, %s, %s, %s, %s, %s)", 
+        (teamId, pdata[0], int(pdata[1]), pdata[2], pdata[4], int(pdata[3]))
+    )
+    return
 
 def main():
     # Connect to an existing database
@@ -38,14 +45,22 @@ def main():
     # Create tkinter Nurse's form window
     app1 = app.Application(issue_list)
     app1.mainloop()
-    print(app1.data)
-    teamIds = getTeam(cur, app1.data[4]) # data[4] is issue of a patient
+    # Get patient information that was filled in
+    pdata = app1.data
+    # Check which teams are able to treat a patients issue
+    teamIds = getTeam(cur, pdata[4]) # pdata[4] is issue of a patient
+    # Get queues of those teams
     queues = getQueues(cur, teamIds)
-    app1.showQueues(queues)
+    # Prompt nurse to select a queue
+    q_data = app1.showQueues(queues)
+    app1.showTimeBtns(q_data, pdata[3]) # pdata[3] is priority of a patient
     app1.mainloop()
+    teamq = app1.to_team
+    # Insert patient into queue
+    insertPatient(cur, teamq, pdata)
     print '--- EOF ---'
     # Make the changes to the database persistent
-    # conn.commit()
+    conn.commit()
     # Close communication with the database
     cur.close()
     conn.close()
