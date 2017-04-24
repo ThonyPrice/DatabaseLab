@@ -1,15 +1,11 @@
-# This class should be called with a patients hospital data 
+# This class should be called with a patients hospital data
 # and shows is as an report.
 
 #!/usr/bin/env python
 import Tkinter as tk
 
-# Pase this code into init.py to run this window:
-    '''
-    import report
-    rep = report.Application(data)
-    rep.mainloop() 
-    '''
+
+
 
 class Application(tk.Frame):
     def __init__(self, info, master=None):
@@ -17,7 +13,7 @@ class Application(tk.Frame):
         self.grid()
         self.displayLabels()
         self.displayInfo(info)
-    
+
     def displayLabels(self):
         tk.Label(self, text='PATIENT REPORT:').grid(row=0)
         tk.Label(self, text='Name:').grid(row=1)
