@@ -91,12 +91,11 @@ def main():
     # Get treatments for patients issue
     treats = getTreatments(cur, patient_tup[4])
     app2.showTreatments(treats)
-    app2.mainloop()
-    # Get the ordinated treats
-    prescribed_treats = app2.treatments
     drugs = getDrugs(cur)
     app2.showDrugs(drugs)
     app2.mainloop()
+    # Get the ordinated treats
+    prescribed_treats = app2.treatments
     prescribed_drugs = app2.drugs
     print "Prescribed drugs", prescribed_drugs
 
