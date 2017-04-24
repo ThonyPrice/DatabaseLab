@@ -87,10 +87,10 @@ def main():
     app2.showPatientInfo(patient_tup)
     # Get treatments for patients issue
     treats = getTreatments(cur, patient_tup[4])
-    print "Treatments:", treats
-    #TODO: app2.showTreatments()
+    app2.showTreatments(treats)
     app2.mainloop()
-
+    # Get the ordinated treats
+    prescribed_treats = app2.treatments
 
     #app2.showpatient.(teamid)
     print '--- EOF ---'
