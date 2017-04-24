@@ -16,15 +16,17 @@ class Application(tk.Frame):
 
     def displayLabels(self):
         tk.Label(self, text='PATIENT REPORT:').grid(row=0)
-        tk.Label(self, text='Name:').grid(row=1)
-        tk.Label(self, text='Age:').grid(row=2)
-        tk.Label(self, text='Issue:').grid(row=3)
-        tk.Label(self, text='Treatments:').grid(row=4)
-        tk.Label(self, text='Drugs:').grid(row=5)
-        tk.Label(self, text='Waiting time (minutes):').grid(row=6)
-        tk.Label(self, text='Sent home or not (y/n):').grid(row=7)
-        tk.Label(self, text='Total cost:').grid(row=8)
-        tk.Button(self, text='Quit', command=self.quit).grid(row=10, column=1)
+        tk.Label(self, text='PersonId:').grid(row=1)
+        tk.Label(self, text='Name:').grid(row=2)
+        tk.Label(self, text='Age:').grid(row=3)
+        tk.Label(self, text='Issue:').grid(row=4)
+        tk.Label(self, text='Treatments:').grid(row=5)
+        tk.Label(self, text='Drugs:').grid(row=6)
+        tk.Label(self, text='Waiting time (minutes):').grid(row=7)
+        tk.Label(self, text='Sent home or not (y/n):').grid(row=8)
+        tk.Label(self, text='Timestamp:').grid(row=9)
+        tk.Label(self, text='Total cost:').grid(row=10)
+        tk.Button(self, text='Quit', command=self.quit).grid(row=11, column=1)
 
     def displayInfo(self, info):
         for i in range(len(info)):
