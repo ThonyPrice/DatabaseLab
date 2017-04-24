@@ -97,7 +97,7 @@ def main():
     # Open a cursor to perform database operations
     cur = conn.cursor()
     # Drop then create following relations
-    dropTable(cur, 'patientLOG')
+    # dropTable(cur, 'patientLOG')
     mkLog(cur)
     dropTable(cur, 'Queue')
     mkQueue(cur)
