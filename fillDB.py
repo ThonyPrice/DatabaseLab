@@ -81,7 +81,6 @@ def main():
     # Open a cursor to perform database operations
     cur = conn.cursor()
     # Drop then create following relations
-    dropTable(cur, 'Person')
     dropTable(cur, 'Queue')
     mkQueue(cur)
     dropTable(cur, 'Team')
