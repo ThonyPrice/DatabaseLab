@@ -3,7 +3,7 @@ import psycopg2
 # http://initd.org/psycopg/docs/usage.html
 import tkinter_test as app
 import doctor_form as doctor
-
+import report
 
 # Return list of existing issues from db
 def gtIssues(cur):
@@ -36,12 +36,12 @@ def insertPatient(cur, teamId, pdata, time):
     )
     return
 
-def getPatient(cur, teamid):
-    cur.execute("SELECT * FROM Queue WHERE teamID = %(teamid)s \
-    AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s) \
-    AND Timestmp = (SELECT MIN(timestmp) FROM Queue WHERE teamID = %(teamid)s\
-    AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s))", {'teamid': teamid})
-    return [x for x in cur.fetchall()]
+# def getPatient(cur, teamid):
+#     cur.execute("SELECT * FROM Queue WHERE teamID = %(teamid)s \
+#     AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s) \
+#     AND Timestmp = (SELECT MIN(timestmp) FROM Queue WHERE teamID = %(teamid)s\
+#     AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s))", {'teamid': teamid})
+#     return [x for x in cur.fetchall()]
 
 def getTreatments(cur, issue):
     cur.execute("SELECT treatment FROM Treatments WHERE issue = %(issue)s",
@@ -94,7 +94,6 @@ def main():
     teamIds = getTeam(cur, pdata[4]) # pdata[4] is issue of a patient
     # Get queues of those teams
     queues = getQueues(cur, teamIds)
-    waittime = app1.time
     # Prompt nurse to select a queue
     q_data = app1.showQueues(queues)
     app1.showTimeBtns(q_data, pdata[3]) # pdata[3] is priority of a patient
@@ -106,12 +105,9 @@ def main():
     insertPatient(cur, teamq, pdata, time)
     # Open doctors form
     app2 = doctor.Application()
-    app2.mainloop()
-    teamid = app2.team # Get choosen teamId
     # Collect patient first in given teamId's queue
-    patient = getPatient(cur, teamid)
     # Put patient information in a tuple
-    patient_tup = patient[0]
+    patient_tup = (teamq, pdata[0], pdata[1], pdata[2], pdata[4], pdata[3], time)
     # Show patient info in doc_form
     app2.showPatientInfo(patient_tup)
     # Get treatments for patients issue
@@ -120,14 +116,16 @@ def main():
     drugs = getDrugs(cur)
     app2.showDrugs(drugs)
     app2.mainloop()
+    app2.destroy()
     # Get the ordinated treats
     prescribed_treats = app2.treatments
     prescribed_drugs = app2.drugs
     cost = getCost(cur, prescribed_drugs)
-
-    fillLog(cur, pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), waittime, app2.home ,cost)
+    
+    fillLog(cur, pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,cost)
     print "Prescribed drugs", prescribed_drugs
-
+    rep = report.Application([pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,cost])
+    rep.mainloop() 
     print '--- EOF ---'
     # Make the changes to the database persistent
     conn.commit()
