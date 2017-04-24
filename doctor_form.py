@@ -11,11 +11,11 @@ class Application(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
         self.grid()
-        self.team = None
         self.treatments = []
         self.drugs = []
-        self.slctTeam()
         self.home = None
+        self.quitButton = tk.Button(self, text='Enter',
+            command=self.quit).grid(row=26, column=2)
 
     def slctTeam(self):
         tk.Label(self, text='Which MedTeam:').grid(row=0)
@@ -31,8 +31,7 @@ class Application(tk.Frame):
         self.team = val
 
     def showPatientInfo(self, data):
-        tk.Label(self, text='MEDICAL TEAM:').grid(row=2)
-        tk.Label(self, text='%s' % str(self.team)).grid(row=2, column=1)
+        tk.Label(self, text='DOCTORS FORM:').grid(row=2)
         tk.Label(self, text='Patient\'s name:').grid(row=3)
         tk.Label(self, text='%s' % str(data[1])).grid(row=3, column=1)
         tk.Label(self, text='Patient\'s age:').grid(row=4)
@@ -73,4 +72,4 @@ class Application(tk.Frame):
             command= lambda val = 'n': self.setSend(val)).grid(row=25, column=1)
 
     def setSend(self, val):
-        self.send = val
+        self.home = val
