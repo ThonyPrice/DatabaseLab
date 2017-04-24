@@ -43,7 +43,10 @@ def getPatient(cur, teamid):
     AND priority = (SELECT MAX(Priority) FROM Queue WHERE teamID = %(teamid)s))", {'teamid': teamid})
     return [x for x in cur.fetchall()]
 
-
+def getTreatments(cur, issue):
+    cur.execute("SELECT treatment FROM Treatments WHERE issue = %(issue)s", 
+        {'issue': issue})
+    return [x[0] for x in cur.fetchall()]
 
 
 def main():
@@ -76,10 +79,15 @@ def main():
     app2.mainloop()
     teamid = app2.team # Get choosen teamId
     # Collect patient first in given teamId's queue
-    patient = getPatient(cur, teamid)  
+    patient = getPatient(cur, teamid) 
+    # Put patient information in a tuple
     patient_tup = patient[0]
+    print "Issue", patient_tup[4]
     # Show patient info in doc_form
     app2.showPatientInfo(patient_tup)
+    # Get treatments for patients issue
+    treats = getTreatments(cur, patient_tup[4])
+    print "Treatments:", treats
     #TODO: app2.showTreatments()
     app2.mainloop()
 
