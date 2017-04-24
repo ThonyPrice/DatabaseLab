@@ -13,6 +13,7 @@ class Application(tk.Frame):
         self.grid()
         self.team = None
         self.treatments = []
+        self.drugs = []
         self.slctTeam()
     
     def slctTeam(self):
@@ -50,10 +51,15 @@ class Application(tk.Frame):
     
     def showDrugs(self, drugs):
         tk.Label(self, text='CHOOSE DRUG(S):').grid(row=11)
-        tk.Label(self, text='%s' % str(drugs[0])).grid(row=12, column=1)
-        tk.Label(self, text='%s' % str(drugs[1])).grid(row=13, column=1)
-        tk.Label(self, text='%s' % str(drugs[2])).grid(row=14, column=1)
+        for i in range(len(drugs)):
+            tk.Button(self, text=drugs[i],
+                command= lambda val = drugs[i]: self.addDrug(val)).grid(row=12+i, column=1)
+
     
     def addTreat(self, treatment):
         self.treatments.append(treatment)
+
+    
+    def addDrug(self, drug):
+        self.drugs.append(drug)
 
