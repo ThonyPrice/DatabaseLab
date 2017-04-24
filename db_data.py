@@ -17,7 +17,7 @@ queue_data = [
     ['3', 'Lena',   74, 'F', 'Foot pain',       2,  '14:47'],
     ['3', 'Max',    28, 'M', 'Back pain',       5,  '13:30'],
     ['4', 'Nora',   15, 'F', 'Food allergy',    3,  '13:37'],
-    ['4', 'Oden',   55, 'M', 'Flower allergy',  5,  '14:12'],
+    ['4', 'Oden',   55, 'M', 'Sun allergy',     5,  '14:12'],
     ['4', 'Pat',    82, 'M', 'Sun allergy',     4,  '11:06'],
     ['4', 'Rick',   28, 'M', 'Sun allergy',     3,  '12:12'],
     ['5', 'Siri',   51, 'F', 'Impact trauma',   2,  '14:59'],
