@@ -11,7 +11,7 @@ def dropTable(cur, name):
     cur.execute('DROP TABLE %s;' % name)
     return
 
-# Make the relation Queue and populate it with patients that are 
+# Make the relation Queue and populate it with patients that are
 #   assigned to a teamID and has a name, age, gender, issue and priority.
 def mkQueue(cur):
     cur.execute ("CREATE TABLE Queue(   \
@@ -26,12 +26,12 @@ def mkQueue(cur):
     for pdata in queue_data:
         cur.execute("INSERT INTO Queue \
             (teamID, name, age, gender, issue, priority, timestmp) \
-            VALUES (%s, %s, %s, %s, %s, %s, %s)", 
+            VALUES (%s, %s, %s, %s, %s, %s, %s)",
             (pdata[0], pdata[1], pdata[2], pdata[3], pdata[4], pdata[5], pdata[6])
         )
     return
 
-# Make the Team relation that contains the TeamID, head of team and the 
+# Make the Team relation that contains the TeamID, head of team and the
 #   three issues a team can deal with.
 def mkTeam(cur):
     cur.execute("CREATE TABLE Team( \
@@ -61,7 +61,7 @@ def mkTreatments(cur):
             (data[0], data[1])
         )
     return
-    
+
 # Make relation Drugs that lists all drugs and their associated cost
 def mkDrugs(cur):
     cur.execute("CREATE TABLE Drugs(   \
@@ -74,13 +74,26 @@ def mkDrugs(cur):
             (data[0], data[1])
         )
     return
-    
+
+def mkLog(cur):
+    cur.execute ("CREATE TABLE patientLOG(                      \
+        name varchar,                   \
+        age integer,                    \
+        issue varchar,                  \
+        treat varchar,                  \
+        drugs varchar,                  \
+        waitTime int,                   \
+        home char,                      \
+        totCost int);"
+        )
+
 def main():
     # Connect to an existing database
     conn = psycopg2.connect("dbname=hospital user=postgres")
     # Open a cursor to perform database operations
     cur = conn.cursor()
     # Drop then create following relations
+    mkLog(cur)
     dropTable(cur, 'Queue')
     mkQueue(cur)
     dropTable(cur, 'Team')
@@ -97,5 +110,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
