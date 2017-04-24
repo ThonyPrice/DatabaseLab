@@ -48,6 +48,10 @@ def getTreatments(cur, issue):
         {'issue': issue})
     return [x[0] for x in cur.fetchall()]
 
+def getDrugs(cur):
+    cur.execute("SELECT drug FROM Drugs")
+    return [x[0] for x in cur.fetchall()]
+
 
 def main():
     # Connect to an existing database
@@ -91,8 +95,9 @@ def main():
     app2.mainloop()
     # Get the ordinated treats
     prescribed_treats = app2.treatments
+    drugs = getDrugs(cur)
+    print "Drugs", drugs
 
-    #app2.showpatient.(teamid)
     print '--- EOF ---'
     # Make the changes to the database persistent
     conn.commit()
