@@ -24,8 +24,8 @@ class Application(tk.Frame):
                 command= lambda val = str(i+1): self.setTeam(str(val))).grid(row=0, column=1+i)
         self.quitButton = tk.Button(self, text='Enter',
             command=self.quit)
-        self.quitButton.grid(row=20, column=0)
-        return
+        self.quitButton.grid(row=26, column=2)
+
 
     def setTeam(self, val):
         self.team = val
@@ -55,7 +55,7 @@ class Application(tk.Frame):
         for i in range(len(drugs)):
             tk.Button(self, text=drugs[i],
                 command= lambda val = drugs[i]: self.addDrug(val)).grid(row=12+i, column=1)
-
+        self.sndBtns()
 
     def addTreat(self, treatment):
         self.treatments.append(treatment)
@@ -63,3 +63,14 @@ class Application(tk.Frame):
 
     def addDrug(self, drug):
         self.drugs.append(drug)
+
+
+    def sndBtns(self):
+        tk.Label(self, text='SEND PATIENT:').grid(row=23)
+        tk.Button(self, text='Home',
+            command= lambda val = 'y': self.setSend(val)).grid(row=24, column=1)
+        tk.Button(self, text='Ordinate further care',
+            command= lambda val = 'n': self.setSend(val)).grid(row=25, column=1)
+
+    def setSend(self, val):
+        self.send = val
