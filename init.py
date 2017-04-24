@@ -44,13 +44,33 @@ def getPatient(cur, teamid):
     return [x for x in cur.fetchall()]
 
 def getTreatments(cur, issue):
-    cur.execute("SELECT treatment FROM Treatments WHERE issue = %(issue)s", 
+    cur.execute("SELECT treatment FROM Treatments WHERE issue = %(issue)s",
         {'issue': issue})
     return [x[0] for x in cur.fetchall()]
 
 def getDrugs(cur):
     cur.execute("SELECT drug FROM Drugs")
     return [x[0] for x in cur.fetchall()]
+
+def fillLog(cur, name, age, issue, treat, drugs, waittime, home, totCost):
+    return
+
+def getCost(cur, ListOfPills):
+    cost = 0
+    print("list of pills: ")
+    for i in ListOfPills:
+        print(i)
+        cur.execute("SELECT cost FROM Drugs WHERE drug = %(i)s",
+            {'i': i})
+
+        x = cur.fetchall()[0][0]
+        print x
+        cost += int(x)
+    return cost
+
+
+
+
 
 
 def main():
@@ -69,6 +89,7 @@ def main():
     teamIds = getTeam(cur, pdata[4]) # pdata[4] is issue of a patient
     # Get queues of those teams
     queues = getQueues(cur, teamIds)
+    waittime = app1.time
     # Prompt nurse to select a queue
     q_data = app1.showQueues(queues)
     app1.showTimeBtns(q_data, pdata[3]) # pdata[3] is priority of a patient
@@ -83,7 +104,7 @@ def main():
     app2.mainloop()
     teamid = app2.team # Get choosen teamId
     # Collect patient first in given teamId's queue
-    patient = getPatient(cur, teamid) 
+    patient = getPatient(cur, teamid)
     # Put patient information in a tuple
     patient_tup = patient[0]
     # Show patient info in doc_form
@@ -91,13 +112,16 @@ def main():
     # Get treatments for patients issue
     treats = getTreatments(cur, patient_tup[4])
     app2.showTreatments(treats)
+    drugs = getDrugs(cur)
+    app2.showDrugs(drugs)
+    home = app2.home
     app2.mainloop()
     # Get the ordinated treats
     prescribed_treats = app2.treatments
-    drugs = getDrugs(cur)
-    app2.showDrugs(drugs)
-    app2.mainloop()
     prescribed_drugs = app2.drugs
+    cost = getCost(cur, prescribed_drugs)
+
+    fillLog(cur, pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), waittime, home ,cost)
     print "Prescribed drugs", prescribed_drugs
 
     print '--- EOF ---'
