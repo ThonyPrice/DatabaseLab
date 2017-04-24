@@ -53,12 +53,13 @@ def mkTeam(cur):
 def mkTreatments(cur):
     cur.execute("CREATE TABLE Treatments(   \
         issue varchar,                      \
-        treatment varchar);"
+        treatment varchar,                  \
+        cost int);"
     )
     for data in issues_and_treatments:
         cur.execute("INSERT INTO Treatments \
-            (issue, treatment) VALUES (%s, %s)",
-            (data[0], data[1])
+            (issue, treatment, cost) VALUES (%s, %s, %s)",
+            (data[0], data[1], data[2])
         )
     return
 
@@ -93,7 +94,7 @@ def main():
     # Open a cursor to perform database operations
     cur = conn.cursor()
     # Drop then create following relations
-    mkLog(cur)
+    # mkLog(cur)
     dropTable(cur, 'Queue')
     mkQueue(cur)
     dropTable(cur, 'Team')
