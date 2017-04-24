@@ -79,7 +79,7 @@ def mkDrugs(cur):
 
 def mkLog(cur):
     cur.execute ("CREATE TABLE patientLOG( \
-        personID serial UNIQUE,         \
+        personID varchar UNIQUE,        \
         name varchar,                   \
         age integer,                    \
         issue varchar,                  \
