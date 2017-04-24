@@ -86,7 +86,6 @@ def main():
     patient = getPatient(cur, teamid) 
     # Put patient information in a tuple
     patient_tup = patient[0]
-    print "Issue", patient_tup[4]
     # Show patient info in doc_form
     app2.showPatientInfo(patient_tup)
     # Get treatments for patients issue
@@ -96,7 +95,10 @@ def main():
     # Get the ordinated treats
     prescribed_treats = app2.treatments
     drugs = getDrugs(cur)
-    print "Drugs", drugs
+    app2.showDrugs(drugs)
+    app2.mainloop()
+    prescribed_drugs = app2.drugs
+    print "Prescribed drugs", prescribed_drugs
 
     print '--- EOF ---'
     # Make the changes to the database persistent
