@@ -66,9 +66,9 @@ issues_and_treatments = [
     ['Fake trauma', 'Trauma surgery',   890],
     ['Fake trauma', 'Fake surgery',     1000],
     ['Fake trauma', 'Trauma treatment',     280],
-    ['Serious trauma', 'Surgery1'       600],
-    ['Serious trauma', 'Surgery2'       600],
-    ['Serious trauma', 'Surgery3'       600]
+    ['Serious trauma', 'Surgery1',      600],
+    ['Serious trauma', 'Surgery2',      600],
+    ['Serious trauma', 'Surgery3',      600]
 ]
 
 drugs_data = [
