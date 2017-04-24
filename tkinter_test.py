@@ -14,6 +14,7 @@ class Application(tk.Frame):
         self.timestamp = None
         self.data = None
         self.into_team = None
+        self.time = None
 
     def createWidgets(self):
         name    = tk.StringVar()
@@ -41,7 +42,7 @@ class Application(tk.Frame):
         self.quitButton = tk.Button(self, text='Quit',
             command=self.quit)
         self.quitButton.grid(row=20, column=0)
-        
+
     def setPrio(self, value):
         self.prio = value
 
@@ -54,7 +55,7 @@ class Application(tk.Frame):
         age = age.get()
         gender = gender.get()
         self.data = [name, age, gender, self.prio, self.issue] # Removed timestamp for now
-    
+
     def showQueues(self, queues):
         q_prios = []
         for i in range(len(queues)):
@@ -66,7 +67,7 @@ class Application(tk.Frame):
             t.grid(row=22, column=1+i)
             q_prios.append(prio_data)
         return q_prios
-    
+
     def showTimeBtns(self, q_prios, p_prio):
         i = 0
         for queue_priorities in q_prios:
@@ -74,11 +75,12 @@ class Application(tk.Frame):
             for priority in queue_priorities:
                 if int(priority[1]) >= int(p_prio):
                     total += priority[1] * 10
-            tk.Button(self, text=str(total), 
-                command=lambda val = priority[0]: self.setTeam(val)).grid(row=25, column=1+i)
+            tk.Button(self, text=str(total),
+                command=lambda val = priority[0], time = total: self.setTeam(val, time)).grid(row=25, column=1+i)
             i += 1
-        return
-    
-    def setTeam(self, val):
-        self.to_team = val
 
+        return
+
+    def setTeam(self, val, time):
+        self.to_team = val
+        self.time = time
