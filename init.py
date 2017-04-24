@@ -53,6 +53,11 @@ def getDrugs(cur):
     return [x[0] for x in cur.fetchall()]
 
 def fillLog(cur, name, age, issue, treat, drugs, waittime, home, totCost):
+    cur.execute("INSERT INTO patientLOG \
+        (name, age, issue, treat, drugs, waittime, home, totCost) \
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        (name, age, issue, treat, drugs, waittime, home, totCost))
+
     return
 
 def getCost(cur, ListOfPills):
@@ -114,14 +119,13 @@ def main():
     app2.showTreatments(treats)
     drugs = getDrugs(cur)
     app2.showDrugs(drugs)
-    home = app2.home
     app2.mainloop()
     # Get the ordinated treats
     prescribed_treats = app2.treatments
     prescribed_drugs = app2.drugs
     cost = getCost(cur, prescribed_drugs)
 
-    fillLog(cur, pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), waittime, home ,cost)
+    fillLog(cur, pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), waittime, app2.home ,cost)
     print "Prescribed drugs", prescribed_drugs
 
     print '--- EOF ---'
