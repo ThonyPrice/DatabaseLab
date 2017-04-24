@@ -1,6 +1,6 @@
-# This class represents a interface for doctors where a user can select 
+# This class represents a interface for doctors where a user can select
 #   which medical team he/she belong to, see a patients information,
-#   select treatments and drugs then send patient home or to further care. 
+#   select treatments and drugs then send patient home or to further care.
 
 #!/usr/bin/env python
 import Tkinter as tk
@@ -15,7 +15,8 @@ class Application(tk.Frame):
         self.treatments = []
         self.drugs = []
         self.slctTeam()
-    
+        self.home = None
+
     def slctTeam(self):
         tk.Label(self, text='Which MedTeam:').grid(row=0)
         for i in range(5):
@@ -28,7 +29,7 @@ class Application(tk.Frame):
 
     def setTeam(self, val):
         self.team = val
-    
+
     def showPatientInfo(self, data):
         tk.Label(self, text='MEDICAL TEAM:').grid(row=2)
         tk.Label(self, text='%s' % str(self.team)).grid(row=2, column=1)
@@ -41,25 +42,24 @@ class Application(tk.Frame):
         tk.Label(self, text='Patient\'s issue:').grid(row=6)
         tk.Label(self, text='%s' % str(data[4])).grid(row=6, column=1)
 
-    
+
     def showTreatments(self, treats):
         tk.Label(self, text='CHOOSE TREATMENT(S):').grid(row=7)
         for i in range(len(treats)):
             tk.Button(self, text=treats[i],
                 command= lambda val = treats[i]: self.addTreat(val)).grid(row=8+i, column=1)
 
-    
+
     def showDrugs(self, drugs):
         tk.Label(self, text='CHOOSE DRUG(S):').grid(row=11)
         for i in range(len(drugs)):
             tk.Button(self, text=drugs[i],
                 command= lambda val = drugs[i]: self.addDrug(val)).grid(row=12+i, column=1)
 
-    
+
     def addTreat(self, treatment):
         self.treatments.append(treatment)
 
-    
+
     def addDrug(self, drug):
         self.drugs.append(drug)
-
