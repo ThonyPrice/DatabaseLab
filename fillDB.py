@@ -15,6 +15,7 @@ def dropTable(cur, name):
 #   assigned to a teamID and has a name, age, gender, issue and priority.
 def mkQueue(cur):
     cur.execute ("CREATE TABLE Queue(   \
+        personid varchar PRIMARY KEY,   \
         teamID serial,                  \
         name varchar,                   \
         age integer,                    \
@@ -25,9 +26,9 @@ def mkQueue(cur):
     )
     for pdata in queue_data:
         cur.execute("INSERT INTO Queue \
-            (teamID, name, age, gender, issue, priority, timestmp) \
-            VALUES (%s, %s, %s, %s, %s, %s, %s)",
-            (pdata[0], pdata[1], pdata[2], pdata[3], pdata[4], pdata[5], pdata[6])
+            (personid, teamID, name, age, gender, issue, priority, timestmp) \
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+            (pdata[0], pdata[1], pdata[2], pdata[3], pdata[4], pdata[5], pdata[6], pdata[7])
         )
     return
 
@@ -77,7 +78,8 @@ def mkDrugs(cur):
     return
 
 def mkLog(cur):
-    cur.execute ("CREATE TABLE patientLOG(                      \
+    cur.execute ("CREATE TABLE patientLOG( \
+        personID serial UNIQUE,         \
         name varchar,                   \
         age integer,                    \
         issue varchar,                  \
@@ -85,6 +87,7 @@ def mkLog(cur):
         drugs varchar,                  \
         waitTime int,                   \
         home char,                      \
+        timee varchar UNIQUE,           \
         totCost int);"
         )
 
@@ -94,7 +97,8 @@ def main():
     # Open a cursor to perform database operations
     cur = conn.cursor()
     # Drop then create following relations
-    # mkLog(cur)
+    dropTable(cur, 'patientLOG')
+    mkLog(cur)
     dropTable(cur, 'Queue')
     mkQueue(cur)
     dropTable(cur, 'Team')
