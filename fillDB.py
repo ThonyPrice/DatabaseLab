@@ -62,18 +62,34 @@ def mkTreatments(cur):
         )
     return
     
+# Make relation Drugs that lists all drugs and their associated cost
+def mkDrugs(cur):
+    cur.execute("CREATE TABLE Drugs(   \
+        drug varchar,                      \
+        cost int);"
+    )
+    for data in drugs_data:
+        cur.execute("INSERT INTO Drugs \
+            (drug, cost) VALUES (%s, %s)",
+            (data[0], data[1])
+        )
+    return
+    
 def main():
     # Connect to an existing database
     conn = psycopg2.connect("dbname=hospital user=postgres")
     # Open a cursor to perform database operations
     cur = conn.cursor()
     # Drop then create following relations
+    dropTable(cur, 'Person')
     dropTable(cur, 'Queue')
     mkQueue(cur)
     dropTable(cur, 'Team')
     mkTeam(cur)
     dropTable(cur, 'Treatments')
     mkTreatments(cur)
+    dropTable(cur, 'Drugs')
+    mkDrugs(cur)
     # Make the changes to the database persistent
     conn.commit()
     # # Close communication with the database
