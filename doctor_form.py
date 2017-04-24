@@ -45,7 +45,7 @@ class Application(tk.Frame):
         tk.Label(self, text='CHOOSE TREATMENT(S):').grid(row=7)
         for i in range(len(treats)):
             tk.Button(self, text=treats[i],
-                command= lambda val = treats[i]: self.addTreat(treats[i])).grid(row=8+i, column=1)
+                command= lambda val = treats[i]: self.addTreat(val)).grid(row=8+i, column=1)
 
     
     def showDrugs(self, drugs):
@@ -55,6 +55,5 @@ class Application(tk.Frame):
         tk.Label(self, text='%s' % str(drugs[2])).grid(row=14, column=1)
     
     def addTreat(self, treatment):
-        print "HERE:", treatment
         self.treatments.append(treatment)
 
