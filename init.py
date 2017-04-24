@@ -3,7 +3,7 @@ import psycopg2
 # http://initd.org/psycopg/docs/usage.html
 import tkinter_test as app
 import doctor_form as doctor
-import report
+import report_form as report
 
 # Return list of existing issues from db
 def gtIssues(cur):
@@ -98,6 +98,7 @@ def main():
     app1.mainloop()
     # Get patient information that was filled in
     pdata = app1.data
+    print pdata
     # Check which teams are able to treat a patients issue
     teamIds = getTeam(cur, pdata[4]) # pdata[4] is issue of a patient
     # Get queues of those teams
@@ -129,11 +130,11 @@ def main():
     prescribed_treats = app2.treatments
     prescribed_drugs = app2.drugs
     cost = getCost(cur, prescribed_drugs, prescribed_treats)
-    
-    fillLog(cur, pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,cost)
+
+    fillLog(cur, pdata[0], pdata[1], pdata[2], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,time, cost)
     print "Prescribed drugs", prescribed_drugs
-    rep = report.Application([pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,cost])
-    rep.mainloop() 
+    rep = report.Application([pdata[0], pdata[1], pdata[2], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home , time, cost])
+    rep.mainloop()
     print '--- EOF ---'
     # Make the changes to the database persistent
     conn.commit()
