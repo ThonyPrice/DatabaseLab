@@ -100,12 +100,12 @@ def main():
     pdata = app1.data
     print pdata
     # Check which teams are able to treat a patients issue
-    teamIds = getTeam(cur, pdata[5]) # pdata[5] is issue of a patient
+    teamIds = getTeam(cur, pdata[4]) # pdata[4] is issue of a patient
     # Get queues of those teams
     queues = getQueues(cur, teamIds)
     # Prompt nurse to select a queue
     q_data = app1.showQueues(queues)
-    app1.showTimeBtns(q_data, pdata[4]) # pdata[4] is priority of a patient
+    app1.showTimeBtns(q_data, pdata[3]) # pdata[3] is priority of a patient
     app1.mainloop()
     teamq = app1.to_team
     app1.destroy()
@@ -116,7 +116,7 @@ def main():
     app2 = doctor.Application()
     # Collect patient first in given teamId's queue
     # Put patient information in a tuple
-    patient_tup = (teamq, pdata[1], pdata[2], pdata[3], pdata[5], pdata[4], time)
+    patient_tup = (teamq, pdata[0], pdata[1], pdata[2], pdata[4], pdata[3], time)
     # Show patient info in doc_form
     app2.showPatientInfo(patient_tup)
     # Get treatments for patients issue
@@ -131,9 +131,9 @@ def main():
     prescribed_drugs = app2.drugs
     cost = getCost(cur, prescribed_drugs, prescribed_treats)
 
-    fillLog(cur, pdata[0], pdata[1], pdata[2], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,time, cost)
+    fillLog(cur, pdata[5], pdata[0], pdata[1], pdata[3],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,time, cost)
     print "Prescribed drugs", prescribed_drugs
-    rep = report.Application([pdata[0], pdata[1], pdata[2], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home , time, cost])
+    rep = report.Application([pdata[5], pdata[0], pdata[1], pdata[3],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home , time, cost])
     rep.mainloop()
     print '--- EOF ---'
     # Make the changes to the database persistent
