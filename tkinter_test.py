@@ -58,7 +58,7 @@ class Application(tk.Frame):
         name = name.get()
         age = age.get()
         gender = gender.get()
-        self.data = [pId, name, age, gender, self.prio, self.issue] # Removed timestamp for now
+        self.data = [name, age, gender, self.prio, self.issue, pId] # Removed timestamp for now
 
     def showQueues(self, queues):
         q_prios = []
