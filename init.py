@@ -1,4 +1,5 @@
 import random
+import datetime
 import psycopg2
 # http://initd.org/psycopg/docs/usage.html
 import tkinter_test as app
@@ -30,9 +31,9 @@ def getQueues(cur, ids):
 
 def insertPatient(cur, teamId, pdata, time):
     cur.execute("INSERT INTO Queue \
-        (teamID, name, age, gender, issue, priority, timestmp) \
-        VALUES (%s, %s, %s, %s, %s, %s, %s)",
-        (teamId, pdata[0], int(pdata[1]), pdata[2], pdata[4], int(pdata[3]), time)
+        (personid, teamID, name, age, gender, issue, priority, timestmp) \
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+        (pdata[5], teamId, pdata[0], int(pdata[1]), pdata[2], pdata[4], int(pdata[3]), time)
     )
     return
 
@@ -52,11 +53,12 @@ def getDrugs(cur):
     cur.execute("SELECT drug FROM Drugs")
     return [x[0] for x in cur.fetchall()]
 
-def fillLog(cur, name, age, issue, treat, drugs, waittime, home, totCost):
+def fillLog(cur, pid, name, age, issue, treat, drugs, 
+            waittime, home, timestmp, totCost):
     cur.execute("INSERT INTO patientLOG \
-        (name, age, issue, treat, drugs, waittime, home, totCost) \
-        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-        (name, age, issue, treat, drugs, waittime, home, totCost))
+        (personid, name, age, issue, treat, drugs, waittime, home, timee, totCost) \
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)",
+        (str(pid), name, age, issue, treat, drugs, waittime, home, timestmp, totCost))
 
     return
 
@@ -98,7 +100,6 @@ def main():
     app1.mainloop()
     # Get patient information that was filled in
     pdata = app1.data
-    print pdata
     # Check which teams are able to treat a patients issue
     teamIds = getTeam(cur, pdata[4]) # pdata[4] is issue of a patient
     # Get queues of those teams
@@ -110,7 +111,7 @@ def main():
     teamq = app1.to_team
     app1.destroy()
     # Insert patient into queue
-    time = '15:30' # This is the time our patients is logged in the system
+    time = str(datetime.datetime.now().time())[:5] # This is the time our patients is logged in the system
     insertPatient(cur, teamq, pdata, time)
     # Open doctors form
     app2 = doctor.Application()
