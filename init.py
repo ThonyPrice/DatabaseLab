@@ -60,13 +60,21 @@ def fillLog(cur, name, age, issue, treat, drugs, waittime, home, totCost):
 
     return
 
-def getCost(cur, ListOfPills):
+def getCost(cur, ListOfPills, treatments):
     cost = 0
     print("list of pills: ")
     for i in ListOfPills:
         print(i)
         cur.execute("SELECT cost FROM Drugs WHERE drug = %(i)s",
             {'i': i})
+
+        x = cur.fetchall()[0][0]
+        print x
+        cost += int(x)
+    for j in treatments:
+        print(i)
+        cur.execute("SELECT cost FROM Treatments WHERE treatment = %(j)s",
+            {'j': j})
 
         x = cur.fetchall()[0][0]
         print x
@@ -120,7 +128,7 @@ def main():
     # Get the ordinated treats
     prescribed_treats = app2.treatments
     prescribed_drugs = app2.drugs
-    cost = getCost(cur, prescribed_drugs)
+    cost = getCost(cur, prescribed_drugs, prescribed_treats)
     
     fillLog(cur, pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,cost)
     print "Prescribed drugs", prescribed_drugs
