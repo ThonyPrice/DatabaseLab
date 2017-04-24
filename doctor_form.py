@@ -12,6 +12,7 @@ class Application(tk.Frame):
         tk.Frame.__init__(self, master)
         self.grid()
         self.team = None
+        self.treatments = []
         self.slctTeam()
     
     def slctTeam(self):
@@ -27,35 +28,33 @@ class Application(tk.Frame):
     def setTeam(self, val):
         self.team = val
     
-    def showPatientInfo(self):
+    def showPatientInfo(self, data):
         tk.Label(self, text='MEDICAL TEAM:').grid(row=2)
         tk.Label(self, text='%s' % str(self.team)).grid(row=2, column=1)
         tk.Label(self, text='Patient\'s name:').grid(row=3)
+        tk.Label(self, text='%s' % str(data[1])).grid(row=3, column=1)
         tk.Label(self, text='Patient\'s age:').grid(row=4)
+        tk.Label(self, text='%s' % str(data[2])).grid(row=4, column=1)
         tk.Label(self, text='Patient\'s gender:').grid(row=5)
+        tk.Label(self, text='%s' % str(data[3])).grid(row=5, column=1)
         tk.Label(self, text='Patient\'s issue:').grid(row=6)
+        tk.Label(self, text='%s' % str(data[4])).grid(row=6, column=1)
+
     
     def showTreatments(self, treats):
         tk.Label(self, text='CHOOSE TREATMENT(S):').grid(row=7)
-        tk.Label(self, text='%s' % str(treat[0])).grid(row=8, column=1)
-        tk.Label(self, text='%s' % str(treat[1)).grid(row=9, column=1)
-        tk.Label(self, text='%s' % str(treat[2)).grid(row=10, column=1)
+        for i in range(len(treats)):
+            tk.Button(self, text=treats[i],
+                command= lambda val = treats[i]: self.addTreat(treats[i])).grid(row=8+i, column=1)
+
     
     def showDrugs(self, drugs):
         tk.Label(self, text='CHOOSE DRUG(S):').grid(row=11)
         tk.Label(self, text='%s' % str(drugs[0])).grid(row=12, column=1)
-        tk.Label(self, text='%s' % str(drugs[1)).grid(row=13, column=1)
-        tk.Label(self, text='%s' % str(drugs[2)).grid(row=14, column=1)
+        tk.Label(self, text='%s' % str(drugs[1])).grid(row=13, column=1)
+        tk.Label(self, text='%s' % str(drugs[2])).grid(row=14, column=1)
     
-    def sndBtns(self):
-        # TODO
-    
-# This snippet should be used to initiate this class from init.py
-    
-# app2 = doctor.Application()
-# app2.mainloop()
-# team = app2.team
-# print "Selected team:", team
-# app2.showPatientInfo()
-# app2.mainloop()
-# print '--- NOT_EOF ----'    
+    def addTreat(self, treatment):
+        print "HERE:", treatment
+        self.treatments.append(treatment)
+
