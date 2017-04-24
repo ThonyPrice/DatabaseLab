@@ -100,12 +100,12 @@ def main():
     pdata = app1.data
     print pdata
     # Check which teams are able to treat a patients issue
-    teamIds = getTeam(cur, pdata[4]) # pdata[4] is issue of a patient
+    teamIds = getTeam(cur, pdata[5]) # pdata[5] is issue of a patient
     # Get queues of those teams
     queues = getQueues(cur, teamIds)
     # Prompt nurse to select a queue
     q_data = app1.showQueues(queues)
-    app1.showTimeBtns(q_data, pdata[3]) # pdata[3] is priority of a patient
+    app1.showTimeBtns(q_data, pdata[4]) # pdata[4] is priority of a patient
     app1.mainloop()
     teamq = app1.to_team
     app1.destroy()
@@ -116,7 +116,7 @@ def main():
     app2 = doctor.Application()
     # Collect patient first in given teamId's queue
     # Put patient information in a tuple
-    patient_tup = (teamq, pdata[0], pdata[1], pdata[2], pdata[4], pdata[3], time)
+    patient_tup = (teamq, pdata[1], pdata[2], pdata[3], pdata[5], pdata[4], time)
     # Show patient info in doc_form
     app2.showPatientInfo(patient_tup)
     # Get treatments for patients issue
