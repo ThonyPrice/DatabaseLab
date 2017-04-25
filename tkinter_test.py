@@ -1,8 +1,9 @@
+# This class initiates a tkInter window displaying a nurser form
 #!/usr/bin/env python
 import Tkinter as tk
 import datetime
 
-
+# Initialize class
 class Application(tk.Frame):
     def __init__(self, list_of_issues, master=None):
         tk.Frame.__init__(self, master)
@@ -16,6 +17,7 @@ class Application(tk.Frame):
         self.into_team = None
         self.time = None
 
+# Display relevant labels and add buttons
     def createWidgets(self):
         pId     = tk.StringVar()
         name    = tk.StringVar()
@@ -42,7 +44,7 @@ class Application(tk.Frame):
 
         self.insertButton = tk.Button(self, text='Insert',
             command=lambda: self.getData(name, age, gender, pId)).grid(row=20, column=0)
-        self.quitButton = tk.Button(self, text='Quit',
+        self.quitButton = tk.Button(self, text='Continue',
             command=self.quit)
         self.quitButton.grid(row=21, column=0)
 
@@ -64,7 +66,7 @@ class Application(tk.Frame):
         q_prios = []
         for i in range(len(queues)):
             prio_data = []
-            t = tk.Text(self, width=80, height=10)
+            t = tk.Text(self, width=70, height=10)
             for tupl in queues[i]:
                 prio_data.append((tupl[1], tupl[6]))
                 t.insert('end', str(tupl) + '\n')
@@ -82,7 +84,6 @@ class Application(tk.Frame):
             tk.Button(self, text=str(total),
                 command=lambda val = priority[0], time = total: self.setTeam(val, time)).grid(row=25, column=1+i)
             i += 1
-
         return
 
     def setTeam(self, val, time):
