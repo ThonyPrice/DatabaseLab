@@ -36,6 +36,11 @@ def insertPatient(cur, teamId, pdata, time):
     )
     return
 
+# Remove patient from queue
+def rmPatient(cur, pId):
+    cur.execute("DELETE FROM Queue WHERE personid = %(pId)s;", {'pId': pId})
+    return
+
 # Get a treatments for a given issue
 def getTreatments(cur, issue):
     cur.execute("SELECT treatment FROM Treatments WHERE issue = %(issue)s",
@@ -59,7 +64,6 @@ def fillLog(cur, pid, name, age, issue, treat, drugs,
 # Return the total cost of pills and treatments
 def getCost(cur, ListOfPills, treatments):
     cost = 0
-    print("list of pills: ")
     for i in ListOfPills:
         cur.execute("SELECT cost FROM Drugs WHERE drug = %(i)s",
             {'i': i})
@@ -101,6 +105,7 @@ def main():
     # Insert patient into queue and record which time that occurs
     time = str(datetime.datetime.now().time())[:5] 
     insertPatient(cur, teamq, pdata, time)
+    conn.commit()
     
     # Open doctors form
     app2 = doctor.Application()
@@ -115,6 +120,10 @@ def main():
     app2.showDrugs(drugs)
     app2.mainloop()
     app2.destroy()
+    
+    # remove patient from queue
+    rmPatient(cur, pdata[5])
+    conn.commit()
     
     # Get the data froc doctors form
     prescribed_treats = app2.treatments
