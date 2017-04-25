@@ -6,7 +6,6 @@
 import Tkinter as tk
 import datetime
 
-
 class Application(tk.Frame):
     def __init__(self, master=None):
         tk.Frame.__init__(self, master)
@@ -26,7 +25,6 @@ class Application(tk.Frame):
             command=self.quit)
         self.quitButton.grid(row=26, column=2)
 
-
     def setTeam(self, val):
         self.team = val
 
@@ -41,13 +39,11 @@ class Application(tk.Frame):
         tk.Label(self, text='Patient\'s issue:').grid(row=6)
         tk.Label(self, text='%s' % str(data[4])).grid(row=6, column=1)
 
-
     def showTreatments(self, treats):
         tk.Label(self, text='CHOOSE TREATMENT(S):').grid(row=7)
         for i in range(len(treats)):
             tk.Button(self, text=treats[i],
                 command= lambda val = treats[i]: self.addTreat(val)).grid(row=8+i, column=1)
-
 
     def showDrugs(self, drugs):
         tk.Label(self, text='CHOOSE DRUG(S):').grid(row=11)
@@ -59,10 +55,8 @@ class Application(tk.Frame):
     def addTreat(self, treatment):
         self.treatments.append(treatment)
 
-
     def addDrug(self, drug):
         self.drugs.append(drug)
-
 
     def sndBtns(self):
         tk.Label(self, text='SEND PATIENT:').grid(row=23)
