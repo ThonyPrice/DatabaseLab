@@ -4,9 +4,6 @@
 #!/usr/bin/env python
 import Tkinter as tk
 
-
-
-
 class Application(tk.Frame):
     def __init__(self, info, master=None):
         tk.Frame.__init__(self, master)
