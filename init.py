@@ -66,20 +66,14 @@ def getCost(cur, ListOfPills, treatments):
     cost = 0
     print("list of pills: ")
     for i in ListOfPills:
-        print(i)
         cur.execute("SELECT cost FROM Drugs WHERE drug = %(i)s",
             {'i': i})
-
         x = cur.fetchall()[0][0]
-        print x
         cost += int(x)
     for j in treatments:
-        print(i)
         cur.execute("SELECT cost FROM Treatments WHERE treatment = %(j)s",
             {'j': j})
-
         x = cur.fetchall()[0][0]
-        print x
         cost += int(x)
     return cost
 
@@ -132,9 +126,9 @@ def main():
     prescribed_drugs = app2.drugs
     cost = getCost(cur, prescribed_drugs, prescribed_treats)
 
-    fillLog(cur, pdata[5], pdata[0], pdata[1], pdata[3],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,time, cost)
+    fillLog(cur, pdata[5], pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home ,time, cost)
     print "Prescribed drugs", prescribed_drugs
-    rep = report.Application([pdata[5], pdata[0], pdata[1], pdata[3],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home , time, cost])
+    rep = report.Application([pdata[5], pdata[0], pdata[1], pdata[4],', '.join(prescribed_treats), ', '.join(prescribed_drugs), app1.time, app2.home , time, cost])
     rep.mainloop()
     print '--- EOF ---'
     # Make the changes to the database persistent
