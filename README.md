@@ -1,4 +1,4 @@
-# Database - Lab 2
+# Database Technology - Lab 2
 
 ![Screenshot](https://i.imgur.com/Fq3xNdh.jpg)
 
