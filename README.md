@@ -1,6 +1,12 @@
-# Dbas_lab2
+# Database - Lab 2
 
-Set up;
+![Screenshot](https://i.imgur.com/Fq3xNdh.jpg)
+
+## Description
+
+Course work for DD1368 - Database Technology. Miniproject where target was to create an application for receiving patients at the emergency room by a GUI built on a SQL database. A nurses form and a doctors form is simultaneously querying and adding entries in the DB through an GUI made in python with Tkinter.
+
+## Set up
 
   1. $ pip install psycopg2
   
